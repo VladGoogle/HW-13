@@ -1,0 +1,7 @@
+node_modules
+dist
+.idea
+db
+db_val
+
+.env
