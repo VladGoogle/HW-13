@@ -28,7 +28,5 @@ services:
 
 
 volumes:
-  user:
-    driver: local
   db_val:
     driver: local

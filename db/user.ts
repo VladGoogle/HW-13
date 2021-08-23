@@ -21,13 +21,13 @@ export class UserDao {
 
 
     async createUser(name:any,email:any): Promise<User> {
-        const {rows} = await pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name,email])
-        return rows[0]
+        const res = await pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name,email])
+        return res.rows[0]
     }
 
     async updateUser(id:any,name:any,email:any): Promise<User> {
-        const {rows} = await pool.query('UPDATE  users SET name = $1, email = $2 WHERE id = $3', [name,email,id])
-        return rows[0]
+        const res = await pool.query('UPDATE  users SET name = $1, email = $2 WHERE id = $3 RETURNING *', [name,email,id])
+        return res.rows[0]
     }
 
     async deleteUser(id:any): Promise<User> {

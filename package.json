@@ -6,7 +6,7 @@
   "scripts": {
     "prestart:dev": "ts-node db/migrations/index.ts",
     "prestart": "node dist/db/migrations/index.js",
-    "start:dev": "nodemon --exec \"ts-node index.ts\"",
+    "start:dev": "nodemon -e ts,js --exec \"ts-node index.ts\"",
     "start": "node dist/index.js",
     "build": "tsc"
   },

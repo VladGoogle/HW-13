@@ -7,17 +7,17 @@ export class UserController {
 
     public async getUserById(ctx:any)
     {
-        const {id} = ctx.params.id as any;
+        const {id} = ctx.params as any;
         const user = await this.userService.getUserById(id)
         ctx.response.status = 200;
-        ctx.body = user;
+        ctx.response.body = user;
     }
 
     public async getUsers(ctx:any)
     {
         const user = await this.userService.getUsers()
         ctx.response.status = 200;
-        ctx.body = user;
+        ctx.response.body = user;
     }
 
     public async createUser(ctx:any)
@@ -29,7 +29,7 @@ export class UserController {
     }
 
     public async updateUser(ctx: any) {
-        const {id} = ctx.params.id as any;
+        const {id} = ctx.params as any;
         const {name, email} = ctx.request.body as any;
         const user = await this.userService.updateUser(id,name,email)
         ctx.response.status = 200;
@@ -38,7 +38,7 @@ export class UserController {
 
     public async deleteUser(ctx:any)
     {
-         const {id} = ctx.params.id as any;
+         const {id} = ctx.params as any;
          const user = await this.userService.deleteUser(id)
          ctx.response.status = 200;
          ctx.response.body = user
