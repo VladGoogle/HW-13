@@ -4,10 +4,10 @@ import {User}  from '../db/user'
 export class userService {
     private userDao = new UserDao();
 
-   /* public async getUserById(id:any)
+    public async getUserById(id:any)
     {
         return await this.userDao.getUserById(id);
-    }*/
+    }
 
     public async getUsers()
     {
@@ -24,7 +24,7 @@ export class userService {
         return await this.userDao.updateUser(id,name,email);
     }
 
-    /*public async deleteUser(id:any)
+    public async deleteUser(id:any)
     {
         return await this.userDao.deleteUser(id);
     }
@@ -32,5 +32,5 @@ export class userService {
     public async deleteUsers()
     {
         return await this.userDao.deleteUsers();
-    }*/
+    }
 }

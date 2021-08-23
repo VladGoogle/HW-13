@@ -12,26 +12,13 @@ const userController = new UserController();
 
 
 
-/*router.get('/users/:id', async (ctx:any)=> {
-    const {rows} = (await userController.getUserById(ctx.params.id)) as any
-    ctx.response.status = 200;
-    ctx.body = rows[0];
-})*/
-
-
+router.get('/users/:id', async (ctx:any)=>userController.getUserById(ctx))
 router.get('/users', async (ctx:any)=>userController.getUsers(ctx))
 router.post('/users', async (ctx:any)=> userController.createUser(ctx))
 router.put('/users/:id', async (ctx: any)=> userController.updateUser(ctx))
+router.delete('/users',async (ctx:any)=>userController.deleteUsers(ctx))
+router.delete('/users/:id',async (ctx:any)=>userController.deleteUser(ctx))
 
-/*router.delete('/users',async (ctx:any)=>{
-    const {rows} = (await userController.deleteUsers()) as any
-    ctx.response.status = 200;
-})
-
-router.delete('/users/:id',async (ctx:any)=> {
-    const {rows} = (await userController.deleteUser(ctx.params.id)) as any
-    ctx.response.status = 200;
-})*/
 
 
 

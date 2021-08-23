@@ -14,9 +14,10 @@ export class UserDao {
         return rows
     };
 
-   /* async getUserById(id:any): Promise<User> {
-        return pool.query('SELECT * FROM users WHERE id = $1', [id])
-    };*/
+    async getUserById(id:any): Promise<User> {
+       const {rows} = await pool.query('SELECT * FROM users WHERE id = $1', [id])
+       return rows[0]
+    };
 
 
     async createUser(name:any,email:any): Promise<User> {
@@ -29,11 +30,13 @@ export class UserDao {
         return rows[0]
     }
 
-    /*async deleteUser(id:any): Promise<User> {
-        return pool.query('DELETE FROM users WHERE id = $1', [id])
+    async deleteUser(id:any): Promise<User> {
+        const {rows} = await pool.query('DELETE FROM users WHERE id = $1', [id])
+        return rows[0]
     }
 
-    async deleteUsers(): Promise<User> {
-        return pool.query('DELETE FROM users')
-    }*/
+    async deleteUsers(): Promise<User[]> {
+        const {rows} = await pool.query('DELETE FROM users')
+        return rows
+    }
 }

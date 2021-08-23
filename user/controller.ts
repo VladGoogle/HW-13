@@ -5,10 +5,13 @@ import {userService} from "./service";
 export class UserController {
     private userService = new userService();
 
-    /*public async getUserById(id:any)
+    public async getUserById(ctx:any)
     {
-        return await this.userService.getUserById(id);
-    }*/
+        const {id} = ctx.params.id as any;
+        const user = await this.userService.getUserById(id)
+        ctx.response.status = 200;
+        ctx.body = user;
+    }
 
     public async getUsers(ctx:any)
     {
@@ -33,13 +36,18 @@ export class UserController {
         ctx.response.body = user
     }
 
-    /*public async deleteUser(id:any)
+    public async deleteUser(ctx:any)
     {
-        return await this.userService.deleteUser(id);
+         const {id} = ctx.params.id as any;
+         const user = await this.userService.deleteUser(id)
+         ctx.response.status = 200;
+         ctx.response.body = user
     }
 
-    public async deleteUsers()
+    public async deleteUsers(ctx:any)
     {
-        return await this.userService.deleteUsers();
-    }*/
+        const user = await this.userService.deleteUsers()
+        ctx.response.status = 200;
+        ctx.response.body = user
+    }
   }
