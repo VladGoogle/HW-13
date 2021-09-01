@@ -1,5 +1,6 @@
 import {UserDao}  from '../db/user'
 import {User}  from '../db/user'
+import bcrypt from 'bcrypt'
 
 export class userService {
     private userDao = new UserDao();
@@ -9,14 +10,20 @@ export class userService {
         return await this.userDao.getUserById(id);
     }
 
+    public async getUserByEmail(email:any)
+    {
+        return await this.userDao.getUserByEmail(email);
+    }
+
     public async getUsers()
     {
         return await this.userDao.getUsers();
     }
 
-    public async createUser(name:any, email:any)
+    public async createUser(name:any, email:any, password:any)
     {
-        return await this.userDao.createUser(name, email);
+        //password = await bcrypt.hash(password ,10)
+        return await this.userDao.createUser(name, email,password);
     }
 
     public async updateUser(id:any, name:any,email:any)

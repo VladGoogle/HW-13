@@ -1,6 +1,9 @@
 // TODO: create a router and bind endpoints here
 import {UserController } from './controller'
 import Router from '@koa/router'
+import jwt from 'koa-jwt'
+import { createSecretKey } from 'crypto'
+import {secret} from '../server'
 const bodyParser = require('koa-bodyparser')
 const Koa = require('koa')
 const app = new Koa();
@@ -14,8 +17,11 @@ const userController = new UserController();
 
 router.get('/users', async (ctx:any)=> userController.getUsers(ctx))
 router.post('/users', async (ctx:any)=> userController.createUser(ctx))
+router.post('/users/login', async (ctx:any)=> userController.loginUser(ctx))
 router.delete('/users',async (ctx:any)=>userController.deleteUsers(ctx))
-router.get('/users/:id', async (ctx:any)=>userController.getUserById(ctx))
+router.get('/users/:id', jwt({
+    secret: secret
+}), async (ctx:any)=>userController.getUserById(ctx))
 router.put('/users/:id', async (ctx: any)=> userController.updateUser(ctx))
 router.delete('/users/:id',async (ctx:any)=>userController.deleteUser(ctx))
 

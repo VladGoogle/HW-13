@@ -1,4 +1,7 @@
 import {userService} from "./service";
+import bcrypt from 'bcrypt'
+import jsonwebtoken from 'jsonwebtoken'
+import {secret} from '../server'
 
 
 
@@ -22,8 +25,8 @@ export class UserController {
 
     public async createUser(ctx:any)
     {
-        const {name, email} = ctx.request.body as any;
-        const user = await this.userService.createUser(name, email)
+        const {name, email,password} = ctx.request.body as any;
+        const user = await this.userService.createUser(name, email,password)
         ctx.response.status = 201;
         ctx.response.body = user
     }
@@ -49,5 +52,25 @@ export class UserController {
         const user = await this.userService.deleteUsers()
         ctx.response.status = 200;
         ctx.response.body = user
+    }
+
+    public async loginUser(ctx:any)
+    {    
+        const user = ctx.request.body as any;
+        
+        const userObj = await this.userService.getUserByEmail(user.email)
+        const {email, password, ...userInfo}=userObj;
+        if(await bcrypt.compare(user.password, userObj.password))
+        {
+            ctx.body={
+                token: jsonwebtoken.sign({
+                    subject:userInfo,
+                    data: {
+                        user_id: userInfo.id
+                    },
+                    exp:Math.floor(Date.now()/1000)+ (60*60),
+                }, secret)
+            };
+        }
     }
   }

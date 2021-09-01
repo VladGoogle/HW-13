@@ -5,4 +5,5 @@ export default {
   password: process.env.POSTGRES_PASSWORD,
   // @ts-ignore
   port: +process.env.PGPORT,
+  
 };

@@ -4,7 +4,8 @@ import pool from "./index";
 export interface User {
     id: number,
     name: string,
-    email: string
+    email: string,
+    password:string
 }
 
 export class UserDao {
@@ -19,9 +20,14 @@ export class UserDao {
        return rows[0]
     };
 
+    async getUserByEmail(email:any): Promise<User> {
+        const {rows} = await pool.query('SELECT * FROM users WHERE email = \'$1\'', [email])
+        return rows[0]
+     };
 
-    async createUser(name:any,email:any): Promise<User> {
-        const res = await pool.query('INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *', [name,email])
+
+    async createUser(name:any,email:any, password:any): Promise<User> {
+        const res = await pool.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *', [name,email,password])
         return res.rows[0]
     }
 

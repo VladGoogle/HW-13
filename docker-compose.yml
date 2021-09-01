@@ -4,8 +4,6 @@ services:
   server:
     container_name: server
     command: npm run start:dev
-    volumes:
-      - ./:/app
     build: .
     env_file:
       - .env
