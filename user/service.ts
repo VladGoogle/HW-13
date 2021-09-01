@@ -1,9 +1,14 @@
 import {UserDao}  from '../db/user'
 import {User}  from '../db/user'
 import bcrypt from 'bcrypt'
+import {Db} from "../db";
 
 export class userService {
-    private userDao = new UserDao();
+    private userDao: UserDao;
+
+    constructor(Db: Db) {
+        this.userDao = new UserDao(Db);
+    }
 
     public async getUserById(id:any)
     {
@@ -22,7 +27,7 @@ export class userService {
 
     public async createUser(name:any, email:any, password:any)
     {
-        password = await bcrypt.hash(password ,10)
+        //password = await bcrypt.hash(password ,10)
         return await this.userDao.createUser(name, email,password);
     }
 

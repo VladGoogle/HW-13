@@ -2,14 +2,22 @@
 import config from '../config/database'
 import {Pool} from 'pg'
 
-const pool = new Pool({
-    user: config.user,
-    host: config.host,
-    database: config.database,
-    password: config.password,
-    port: config.port
-});
+export class Db {
 
-export default pool;
+    public pool: Pool;
 
+    constructor() {
+       this.pool = new Pool({
+            user: config.user,
+            host: config.host,
+            database: config.database,
+            password: config.password,
+            port: config.port
+        });
+    }
+
+    public async createConnection(): Promise<void> {
+        await this.pool.connect();
+    }
+}
 

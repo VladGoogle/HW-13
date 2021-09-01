@@ -2,11 +2,16 @@ import {userService} from "./service";
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import {secret} from '../server'
-
+import {Pool} from "pg";
+import {Db} from "../db";
 
 
 export class UserController {
-    private userService = new userService();
+    private userService: userService;
+
+    constructor(db: Db) {
+    this.userService = new userService(db);
+    }
 
     public async getUserById(ctx:any)
     {
@@ -64,7 +69,6 @@ export class UserController {
 
     public async registerUser(ctx:any)
     {
-        console.log("djdjd")
         const {name,email,password} = ctx.request.body as any;
         const userObj = await this.userService.createUser(name, email,password)
         ctx.status.response=201;
