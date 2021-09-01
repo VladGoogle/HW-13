@@ -16,6 +16,14 @@ export class UserController {
         ctx.response.body = user;
     }
 
+    public async getUserByEmail(ctx:any)
+    {
+        const {email} = ctx.params as any;
+        const user = await this.userService.getUserById(email)
+        ctx.response.status = 200;
+        ctx.response.body = user;
+    }
+
     public async getUsers(ctx:any)
     {
         const user = await this.userService.getUsers()
@@ -54,11 +62,20 @@ export class UserController {
         ctx.response.body = user
     }
 
+    public async registerUser(ctx:any)
+    {
+        console.log("djdjd")
+        const {name,email,password} = ctx.request.body as any;
+        const userObj = await this.userService.createUser(name, email,password)
+        ctx.status.response=201;
+        ctx.response.body=userObj;
+    }
+
     public async loginUser(ctx:any)
     {    
         const user = ctx.request.body as any;
         
-        const userObj = await this.userService.getUserByEmail(user.email)
+        const userObj = await this.userService.getUserByEmail(user.email);
         const {email, password, ...userInfo}=userObj;
         if(await bcrypt.compare(user.password, userObj.password))
         {

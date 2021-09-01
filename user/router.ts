@@ -15,13 +15,15 @@ const userController = new UserController();
 
 
 
-router.get('/users', async (ctx:any)=> userController.getUsers(ctx))
 router.post('/users', async (ctx:any)=> userController.createUser(ctx))
-router.post('/users/login', async (ctx:any)=> userController.loginUser(ctx))
-router.delete('/users',async (ctx:any)=>userController.deleteUsers(ctx))
+router.post('/register', async (ctx:any)=> userController.registerUser(ctx))
+router.post('/loginUser', async (ctx:any)=> userController.loginUser(ctx))
+router.get('/users', async (ctx:any)=> userController.getUsers(ctx))
+router.get('/users/:email', async (ctx:any)=> userController.getUserByEmail(ctx))
 router.get('/users/:id', jwt({
     secret: secret
 }), async (ctx:any)=>userController.getUserById(ctx))
+router.delete('/users',async (ctx:any)=>userController.deleteUsers(ctx))
 router.put('/users/:id', async (ctx: any)=> userController.updateUser(ctx))
 router.delete('/users/:id',async (ctx:any)=>userController.deleteUser(ctx))
 
