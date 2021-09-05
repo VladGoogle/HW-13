@@ -1,10 +1,13 @@
 // TODO: move conn pool here
 import config from '../config/database'
-import {Pool} from 'pg'
+import {Pool, PoolClient} from 'pg'
+
+console.log(config)
 
 export class Db {
 
     public pool: Pool;
+    public client: PoolClient | undefined;
 
     constructor() {
        this.pool = new Pool({
@@ -16,8 +19,9 @@ export class Db {
         });
     }
 
-    public async createConnection(): Promise<void> {
-        await this.pool.connect();
+    public async createConnection(): Promise<PoolClient> {
+        this.client = await this.pool.connect();
+        return this.client
     }
 }
 

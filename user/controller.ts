@@ -71,14 +71,14 @@ export class UserController {
     {
         const {name,email,password} = ctx.request.body as any;
         const userObj = await this.userService.createUser(name, email,password)
-        ctx.status.response=201;
-        ctx.response.body=userObj;
+        ctx.status =201;
+        ctx.body=userObj;
     }
+
 
     public async loginUser(ctx:any)
     {    
         const user = ctx.request.body as any;
-        
         const userObj = await this.userService.getUserByEmail(user.email);
         const {email, password, ...userInfo}=userObj;
         if(await bcrypt.compare(user.password, userObj.password))

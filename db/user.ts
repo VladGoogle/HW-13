@@ -28,7 +28,7 @@ export class UserDao {
     };
 
     async getUserByEmail(email:any): Promise<User> {
-        const {rows} = await this.pool.query('SELECT * FROM users WHERE email = \'$1\'', [email])
+        const {rows} = await this.pool.query('SELECT * FROM users WHERE email = $1', [email])
         return rows[0]
      };
 

@@ -6,6 +6,7 @@ import {Db} from "../db";
 export class userService {
     private userDao: UserDao;
 
+
     constructor(Db: Db) {
         this.userDao = new UserDao(Db);
     }
@@ -20,14 +21,14 @@ export class userService {
         return await this.userDao.getUserByEmail(email);
     }
 
-    public async getUsers()
-    {
+    public async getUsers() {
         return await this.userDao.getUsers();
     }
+    
 
     public async createUser(name:any, email:any, password:any)
     {
-        //password = await bcrypt.hash(password ,10)
+        password = await bcrypt.hash(password ,10)
         return await this.userDao.createUser(name, email,password);
     }
 

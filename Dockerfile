@@ -8,6 +8,4 @@ RUN npm i
 
 COPY . .
 
-RUN npm build
-
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"]

@@ -2,14 +2,22 @@
 import {Db} from "../index";
 
 async function run(){
-    let db = new Db()
-    await db.createConnection();
+    try {
+        let db = new Db()
+        console.log('Start db')
+        const client = await db.createConnection();
+        console.log('Connected db')
 
-    await db.pool.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
-    await  db.pool.query("CREATE TABLE IF NOT EXISTS users(id uuid NOT NULL DEFAULT uuid_generate_v4(), name varchar(100), email text, password varchar(255))");
-    await  db.pool.end();
+        // await db.pool.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
+        await client.query("CREATE TABLE IF NOT EXISTS users(id serial, name varchar(100), email text, password varchar(255))");
+        await client.release();
+        console.log('db created')
+    } catch(e) {
+        console.log(e)
+    }
 }
 
-(async()=>{
-    await run();
-})()
+
+
+console.log('start')
+run().then(() => console.log('Finished')).catch(e => console.error(e))
